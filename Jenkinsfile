@@ -2,11 +2,7 @@ pipeline {
     agent any
     tools {
         maven 'apache-maven-3.0.1'
-        jdk 'java-21'
-    }
-    environment {
-        JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
-        PATH = "/usr/lib/jvm/java-17-openjdk-amd64/bin:${env.PATH}"
+        jdk 'java-17'
     }
     stages {
 
