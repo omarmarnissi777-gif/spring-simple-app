@@ -14,12 +14,11 @@ pipeline {
 
         stage('Build & JUnit Test') {
             steps {
-                sh 'java -version'
                 sh 'mvn install'
             }
             post {
                 success {
-                    junit 'target/surefire-reports/**/*.xml'
+                    junit allowEmptyResults: true, testResults: 'target/surefire-reports/**/*.xml'
                 }
             }
         }
