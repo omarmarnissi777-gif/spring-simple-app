@@ -1,7 +1,12 @@
 pipeline {
     agent any
     tools {
-        maven 'apache-maven-3.0.1' 
+        maven 'apache-maven-3.0.1'
+        jdk 'java-21'
+    }
+    environment {
+        JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
+        PATH = "/usr/lib/jvm/java-17-openjdk-amd64/bin:${env.PATH}"
     }
     stages {
 
@@ -13,6 +18,7 @@ pipeline {
 
         stage('Build & JUnit Test') {
             steps {
+                sh 'java -version'
                 sh 'mvn install'
             }
             post {
