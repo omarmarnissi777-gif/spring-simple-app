@@ -26,10 +26,12 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube-server') {
-                    sh 'mvn clean verify sonar:sonar \
-                        -Dsonar.projectKey=devsecops-project-key \
-                        -Dsonar.host.url=http://localhost:9000 \
-                        -Dsonar.login=$sonarlogin'
+                    withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                        sh 'mvn clean verify sonar:sonar \
+                            -Dsonar.projectKey=spring-simple-app \
+                            -Dsonar.host.url=http://localhost:9000 \
+                            -Dsonar.login=$SONAR_TOKEN'
+                    }
                 }
             }
         }
@@ -39,6 +41,13 @@ pipeline {
                 timeout(time: 1, unit: 'HOURS') {
                     waitForQualityGate abortPipeline: true
                 }
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t omarmarnissi777/spring-simple-app:v1.$BUILD_ID .'
+                sh 'docker image tag omarmarnissi777/spring-simple-app:v1.$BUILD_ID omarmarnissi777/spring-simple-app:latest'
             }
         }
 
