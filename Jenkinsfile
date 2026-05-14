@@ -56,14 +56,14 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t omarmarnissi777/spring-simple-app:v1.$BUILD_ID .'
-                sh 'docker image tag omarmarnissi777/spring-simple-app:v1.$BUILD_ID omarmarnissi777/spring-simple-app:latest'
+                sh 'docker build -t jetza99/spring-simple-app:v1.$BUILD_ID .'
+                sh 'docker image tag jetza99/spring-simple-app:v1.$BUILD_ID jetza99/spring-simple-app:latest'
             }
         }
 
         stage('Image Scan') {
             steps {
-                sh 'trivy image --format template --template "@/usr/local/share/trivy/templates/html.tpl" -o report.html omarmarnissi777/spring-simple-app:latest'
+                sh 'trivy image --format template --template "@/usr/local/share/trivy/templates/html.tpl" -o report.html jetza99/spring-simple-app:latest'
             }
         }
 
@@ -90,9 +90,9 @@ pipeline {
                         ]
                     ]]) {
                     sh "docker login -u ${username} -p ${password}"
-                    sh 'docker push omarmarnissi777/spring-simple-app:v1.$BUILD_ID'
-                    sh 'docker push omarmarnissi777/spring-simple-app:latest'
-                    sh 'docker rmi omarmarnissi777/spring-simple-app:v1.$BUILD_ID omarmarnissi777/spring-simple-app:latest'
+                    sh 'docker push jetza99/spring-simple-app:v1.$BUILD_ID'
+                    sh 'docker push jetza99/spring-simple-app:latest'
+                    sh 'docker rmi jetza99/spring-simple-app:v1.$BUILD_ID jetza99/spring-simple-app:latest'
                 }
             }
         }
