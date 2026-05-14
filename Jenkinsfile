@@ -51,5 +51,17 @@ pipeline {
             }
         }
 
+        stage('Image Scan') {
+            steps {
+                sh 'trivy image --format template --template "@/usr/local/share/trivy/templates/html.tpl" -o report.html omarmarnissi777/spring-simple-app:latest'
+            }
+        }
+
+        stage('Upload Scan Report to AWS S3') {
+            steps {
+                sh 'aws s3 cp report.html s3://project-arch-omarghaithayoubmarrouki/'
+            }
+        }
+
     }
 }
