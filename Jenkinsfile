@@ -79,9 +79,11 @@ pipeline {
                     skipSslVerification: true,
                     timeout: 60,
                     vaultCredentialId: 'vault-cred',
-                    vaultUrl: 'http://127.0.0.1:8200'],
+                    vaultUrl: 'http://127.0.0.1:8200',
+                    engineVersion: 1],
                     vaultSecrets: [[
                         path: 'secrets/creds/docker',
+                        engineVersion: 1,
                         secretValues: [
                             [vaultKey: 'username'],
                             [vaultKey: 'password']
