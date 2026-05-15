@@ -18,4 +18,10 @@ public class App {
         return "Hello, World!";
     }
 
+@GetMapping("/buggy")
+public String buggy() {
+    String s = null;
+    return s.toUpperCase(); // NullPointerException
+}
+
 }
